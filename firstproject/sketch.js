@@ -15,11 +15,13 @@ let redAmount = 255;
 let greenAmount = 0;
 let blueAmount = 0;
 let changey = 1;
+let penSize = 100;
+let textSpace = 10;
 function draw() {
   if (mouseIsPressed) {
     fill(redAmount, greenAmount, blueAmount);
     noStroke();
-    ellipse(mouseX, mouseY, 100, 100);
+    ellipse(mouseX, mouseY, penSize, penSize);
 
     if (theColour === 1) {
       greenAmount += changey;
@@ -57,10 +59,21 @@ function draw() {
   if (keyIsPressed === true) {
     if (keyCode === ENTER) {
       background(0);
+      penSize = 100;
+      textSpace = 10;
+    } else if (keyCode === UP_ARROW){
+      penSize = penSize + 2;
+    } else if (keyCode === DOWN_ARROW){
+      penSize = penSize - 2;
     } else {
       textSize(40);
       fill(210,105,30);
-      text(key, mouseX, mouseY,);
+      text(key, textSpace, mouseY,);
+      textSpace = textSpace + 40
+    } if (penSize < 10) {
+      penSize = 10;
+    } if (penSize > 500) {
+      penSize = 500;
     }
   }
   console.log(greenAmount);

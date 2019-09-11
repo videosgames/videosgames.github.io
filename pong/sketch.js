@@ -17,7 +17,7 @@ function draw() {
     fill(255);
     rect(30, yValue, 10, 50);
     rect(windowWidth - 40, compY, 10, 50);
-    rect(ballX, ballY, 10, 10);
+    ellipse(ballX, ballY, 10, 10);
     let score = str(playerOne) + ':' + str(playerTwo);
     stroke(255);
     line(0, 40, windowWidth, 40);
@@ -43,7 +43,7 @@ function draw() {
     //Making a Computer Paddle
     //Make brain < 75 for 'hard' mode
     let brain = random(0, 100);
-    if (brain < 55){
+    if (brain < 65){
       if (ballY < compY + 20){
         compY = compY - compSpeed;
         if (compY <= 50) {
@@ -60,7 +60,7 @@ function draw() {
     //Moving the Ball and Making Boundaries
     ballX = ballX + directionX;
     ballY = ballY + directionY;
-    if (ballY >= (windowHeight - 10) || ballY <= 50){
+    if (ballY >= (windowHeight - 5) || ballY <= 45){
       directionY = directionY * -1;
     }
   
@@ -76,13 +76,14 @@ function draw() {
       }
       speed = 1;
     }
+    compSpeed = abs(directionX) * 2
   
     //Checking to See if a Paddle Connected
     touch(yValue);
     touch(compY);
   
     //Resetting the Ball and Setting the Score
-    if (ballX <= 20 || ballX >= windowWidth - 20) {
+    if (ballX < 5 || ballX > windowWidth - 5) {
       if (ballX <= 30){
         playerTwo = playerTwo + 1;
       } else {
@@ -112,17 +113,18 @@ function draw() {
 
 //The Function Responsible for Checking if a Paddle Connected
 function touch(player) {
-  if (ballX <= 40 && player === yValue || ballX >= windowWidth - 50 && player === compY) {
-    if (ballY - 5 >= player && ballY <= player + 50){
-      speed = speed + 1
+  if (ballX <= 45 && player === yValue || ballX >= windowWidth - 45 && player === compY) {
+    if (ballY >= player && ballY <= player + 50){
       if (ballY <= player + 5 || ballY >= player + 35) {
         directionY = directionX * sqrt(3);
       } else if (ballY <= player + 15 || ballY >= player + 25) {
+        console.log(ballX, ballY, directionX, directionY);
         directionY = directionX;
       } else {
         directionY = 0;
       } 
       directionX = directionX * -1;
+      speed = speed + 1
     }
   }
 }
@@ -138,7 +140,7 @@ let ballY = 65;
 let directionX = 3;
 let directionY = 0;
 let speed = 1;
-let compSpeed = 5;
+let compSpeed = 6;
 let r = random(0, 100);
 if (r < 50) {
   directionX = directionX * -1;

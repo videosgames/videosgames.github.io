@@ -6,9 +6,15 @@
 // - describe what you did to take this project "above and beyond"
 
 
+//function preload() {
+  //soundFormats('mp3');
+  //ballHit = loadSound('Ping-pong-ball-bounce-sound-effect.mp3');}
+
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(0);
+  //ballHit.play();
 }
 
 function draw() {
@@ -29,6 +35,7 @@ function draw() {
         rectMode(CENTER);
         rect(width/2, (height/3) + 112, 110, 60);
         if (mouseIsPressed) {
+          //ballHit.play();
           gamemode = 1;
           ballX = width/2;
           ballY = height/2;
@@ -197,6 +204,7 @@ function touch(player) {
     }
   }
 }
+
 
 //Global Variables
 let listY = [0, 3, -3];

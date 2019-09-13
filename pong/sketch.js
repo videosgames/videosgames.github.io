@@ -6,15 +6,14 @@
 // - describe what you did to take this project "above and beyond"
 
 
-//function preload() {
-  //soundFormats('mp3');
-  //ballHit = loadSound('Ping-pong-ball-bounce-sound-effect.mp3');}
-
+function preload() {
+  soundFormats('mp3', 'ogg');
+  ballHit = loadSound('assets/pongsound.mp3');
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(0);
-  //ballHit.play();
 }
 
 function draw() {
@@ -35,7 +34,6 @@ function draw() {
         rectMode(CENTER);
         rect(width/2, (height/3) + 112, 110, 60);
         if (mouseIsPressed) {
-          //ballHit.play();
           gamemode = 1;
           ballX = width/2;
           ballY = height/2;
@@ -101,20 +99,24 @@ function draw() {
       }
     }
     
-    //Making a Computer Paddle
-    //Make brain < 75 for 'hard' mode
+    //Making the computer's paddle move
+
     let brain = random(0, 100);
-    if (brain < 65){
-      if (ballY < compY + 40){
-        compY = compY - compSpeed;
-        if (compY <= 50) {
-          compY = 50;
-        }
-      } else if (ballY > compY + 40) {
-        compY = compY + compSpeed;
-        if (compY > (windowHeight - 60)) {
-          compy = windowHeight - 60;
-        }
+    if (brain < 65) {
+      brainSpeed = 1;
+    } else {
+      brainSpeed = 2;
+    }
+
+    if (ballY < compY + 25 - compSpeed){
+      compY = compY - (compSpeed/brainSpeed);
+      if (compY <= 50) {
+        compY = 50;
+      }
+    } else if (ballY > compY + 25 + compSpeed) {
+      compY = compY + (compSpeed/brainSpeed);
+      if (compY > (windowHeight - 60)) {
+        compy = windowHeight - 60;
       }
     }
   
@@ -132,8 +134,8 @@ function draw() {
       } else {
         directionX = directionX + 1;
       }
-      if (directionX >= 15){
-        directionX = 15;
+      if (directionX >= 10){
+        directionX = 10;
       }
       speed = 1;
     }
@@ -200,7 +202,7 @@ function touch(player) {
       if (directionY <= 0 && signn !== -1 || directionY > 0 && signn !== 1){
         directionY = directionY * -1;
       }
-
+      ballHit.play();
     }
   }
 }

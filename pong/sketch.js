@@ -110,14 +110,15 @@ function draw() {
 
     if (ballY < compY + 25 - compSpeed){
       compY = compY - (compSpeed/brainSpeed);
-      if (compY <= 50) {
-        compY = 50;
-      }
     } else if (ballY > compY + 25 + compSpeed) {
       compY = compY + (compSpeed/brainSpeed);
-      if (compY > (windowHeight - 60)) {
-        compy = windowHeight - 60;
-      }
+    }
+    
+    if (compY <= 50) {
+      compY = 50;
+    }
+    if (compY >= (windowHeight - 60)) {
+      compY = windowHeight - 60;
     }
   
     //Moving the Ball and Making Boundaries

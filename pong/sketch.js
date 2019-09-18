@@ -7,7 +7,7 @@
 
 //Global Variables
 let listY = [0, 3, -3];
-let gamemode = 0;
+let gamemode = 3;
 let playerOne = 0;
 let playerTwo = 0;
 let yValue = 50;
@@ -19,18 +19,54 @@ let directionY = 0;
 let speed = 1;
 let compSpeed = 6;
 let whoTurn = 1;
+let font;
+let fontsize = 30;
+let messageOne = 'Press the UP ARROW to move up';
+let messageTwo = 'Press the DOWN ARROW to move down';
+let messageThree = "OKAY";
+let bounds;
+let boundsTwo;
+let box;
+let xb;
+let yb;
+let xbb;
 
 function preload() {
   soundFormats('mp3', 'ogg');
   ballHit = loadSound('assets/pongsound.mp3');
+  font = loadFont("assets/OpenDyslexicMono-Regular.otf");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(0);
+  textFont(font);
+  textSize(fontsize);
+  bounds = font.textBounds(messageOne, 0, 0, fontsize);
+  xb = width / 2 - bounds.w / 2;
+  yb = height / 2 - bounds.h / 2;
+  boundsTwo = font.textBounds(messageTwo, 0, 0, fontsize);
+  xbb = width / 2 - bounds.w / 2;
+  box = font.textBounds(messageThree, 0, 0, fontsize);
+  boxx = width / 2 - box.w / 2;
 }
 
 function draw() {
+  //fill(rectColour);
+  if (gamemode === 3) {
+    let buff = (boundsTwo.w - bounds.w) / 2
+    background(0);
+    fill(0);
+    textAlign(CORNER);
+    stroke(255);
+    rect(bounds.x - buff - 10, bounds.y - 10, boundsTwo.w + 20, bounds.h + 25 + boundsTwo.h);
+    rect(boxx - 10, yb + bounds.h + boundsTwo.h + 35 , box.w + 20, box.h + 20);
+    fill(255);
+    text(messageOne, xb, yb);
+    bounds = font.textBounds(messageOne, xb, yb, fontsize);
+    text(messageTwo, xbb - buff, yb + bounds.h + 5);
+    boundsTwo = font.textBounds(messageTwo, xbb, yb + bounds.h + 5, fontsize);
+  }
   //The start screen
   if (gamemode === 0){
     textFont('monospace');
@@ -246,7 +282,7 @@ function speedMachine(){
 //Displaying the Winner
 function winner(){
   if (playerOne >= 10){
-    backgroud(0);
+    background(0);
     text('Player One Wins!', width/2, height/2);
     gamemode = 2;
   } else if (playerTwo >= 10){

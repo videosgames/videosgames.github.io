@@ -60,12 +60,13 @@ function draw() {
     textAlign(CORNER);
     stroke(255);
     rect(bounds.x - buff - 10, bounds.y - 10, boundsTwo.w + 20, bounds.h + 25 + boundsTwo.h);
-    rect(boxx - 10, yb + bounds.h + boundsTwo.h + 35 , box.w + 20, box.h + 20);
+    rect(boxx - 10, yb + bounds.h + boundsTwo.h + 15 , box.w + 20, box.h + 20);
     fill(255);
     text(messageOne, xb, yb);
     bounds = font.textBounds(messageOne, xb, yb, fontsize);
     text(messageTwo, xbb - buff, yb + bounds.h + 5);
-    boundsTwo = font.textBounds(messageTwo, xbb, yb + bounds.h + 5, fontsize);
+    text(messageThree, boxx, yb + bounds.h + boundsTwo.h + 45);
+    clickTheBox();
   }
   //The start screen
   if (gamemode === 0){
@@ -125,47 +126,50 @@ function draw() {
 
 //Function that checks if you clicked the box
 function clickTheBox() {
-  if (mouseX >= (width/2) - 55 && mouseX <= (width/2) + 55) {
-    if (mouseY >= (height/3) + 82 && mouseY <= (height/3) + 142){
-      fill(10);
-      rect(width/2, (height/3) + 112, 110, 60);
-      fill(255,69,0);
-      stroke(255,69,0);
-      text('[OKAY]', width/2, (height/3) + 112);
-      textSize(15);
-      text('(click)', width/2, (height/3) + 130);
-      noFill();
-      rectMode(CENTER);
-      rect(width/2, (height/3) + 112, 110, 60);
-      if (mouseIsPressed) {
-        gamemode = 1;
-        ballX = width/2;
-        ballY = height/2;
-      }
-    } else {
-      fill(0);
-      rect(width/2, (height/3) + 112, 110, 60);
-      fill(255);
-      stroke(255);
-      text('[OKAY]', width/2, (height/3) + 112);
-      textSize(15);
-      text('(click)', width/2, (height/3) + 130);
-      noFill();
-      rectMode(CENTER);
-      rect(width/2, (height/3) + 112, 110, 60);
-    }
-  } else {
-    fill(0);
-    rect(width/2, (height/3) + 112, 110, 60);
-    fill(255);
-    text('[OKAY]', width/2, (height/3) + 112);
-    textSize(15);
-    text('(click)', width/2, (height/3) + 130);
-    noFill();
-    stroke(255);
-    rectMode(CENTER);
-    rect(width/2, (height/3) + 112, 110, 60);
-  }
+  //rect(boxx - 10, yb + bounds.h + boundsTwo.h + 15 , box.w + 20, box.h + 20);
+  if (mouseX >= boxx + box.w + 10 && mouseX <= boxx - 10) {
+    if (mouseY >= yb + bounds.h + boundsTwo.h + box.h + 35 && mouseY <= yb + bounds.h + boundsTwo.h + 15 ){
+      fill(110);
+      rect(boxx - 10, yb + bounds.h + boundsTwo.h + 15 , box.w + 20, box.h + 20);
+      //fill(10);
+      //rect(width/2, (height/3) + 112, 110, 60);
+      //fill(255,69,0);
+      //stroke(255,69,0);
+      //text('[OKAY]', width/2, (height/3) + 112);
+      //textSize(15);
+      //text('(click)', width/2, (height/3) + 130);
+      //noFill();
+      //rectMode(CENTER);
+      //rect(width/2, (height/3) + 112, 110, 60);
+      //if (mouseIsPressed) {
+        //gamemode = 1;
+        //ballX = width/2;
+        //ballY = height/2;
+      //}
+    } //else {
+      //fill(0);
+      //rect(width/2, (height/3) + 112, 110, 60);
+      //fill(255);
+      //stroke(255);
+      //text('[OKAY]', width/2, (height/3) + 112);
+      //textSize(15);
+      //text('(click)', width/2, (height/3) + 130);
+      //noFill();
+      //rectMode(CENTER);
+      //rect(width/2, (height/3) + 112, 110, 60);
+    //}
+  } //else {
+    //fill(0);
+    //rect(width/2, (height/3) + 112, 110, 60);
+    //fill(255);
+    //text('[OKAY]', width/2, (height/3) + 112);
+    //textSize(15);
+    //text('(click)', width/2, (height/3) + 130);
+    //noFill();
+    //stroke(255);
+    //rectMode(CENTER);
+    //rect(width/2, (height/3) + 112, 110, 60);
+  //}
 }
 
 //Moving the Ball and Making Boundaries

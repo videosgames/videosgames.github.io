@@ -9,7 +9,7 @@
 let listY = [0, 3, -3];
 let gamemode = 0;
 let playerOne = 0;
-let playerTwo = 0;
+let playerTwo = 9;
 let yValue;
 let compY;
 let ballX;
@@ -28,8 +28,11 @@ let xbb;
 
 // Preloading sound effects and font
 function preload() {
-  soundFormats('mp3');
+  soundFormats('mp3', 'wav');
   ballHit = loadSound('assets/pongsound.mp3');
+  bMusic = loadSound('assets/pol-hesitation-long.wav');
+  bMusic.playMode('untilDone');
+  applause = loadSound('assets/applause.wav');
   font = loadFont("assets/OpenDyslexicMono-Regular.otf");
 }
 
@@ -75,6 +78,8 @@ function draw() {
   // Playing the Game
   if (gamemode === 1){
 
+    bMusic.play();
+
     // The Aesthetics of the Game
     background(0);
     fill(255);
@@ -110,6 +115,14 @@ function draw() {
 
   // Displays the Winner
   winner();
+  if (gamemode === 2){
+    bMusic.stop();
+    applause.play();
+    gamemode = 3;
+  }
+  if (gamemode === 3){
+    applause.stop(); //FIX THIS
+  }
 }
 
 // Keeping the Game Proportional to the Window Size

@@ -114,14 +114,13 @@ function draw() {
   }
 
   // Displays the Winner
-  winner();
+  if (gamemode < 3) {
+    winner();
+  }
   if (gamemode === 2){
     bMusic.stop();
     applause.play();
     gamemode = 3;
-  }
-  if (gamemode === 3){
-    applause.stop(); //FIX THIS
   }
 }
 

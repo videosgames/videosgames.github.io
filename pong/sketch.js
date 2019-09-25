@@ -135,7 +135,9 @@ function windowResized() {
   xbb = width / 2 - bounds.w / 2;
   boxx = width / 2 - box.w / 2;
   winner();
-  gamemode = 3;
+  if (gamemode === 2){
+    gamemode = 3;
+  }
 }
 
 //  Function that checks if you clicked the box

@@ -3,13 +3,13 @@
 // September 10, 2019
 //
 // Extra for Experts:
-// The game has Sound Effects and will be resized if the window is resized
+// The game has Sound and will be Resized if the Window is Resized
 
-//Global Variables
+// Global Variables
 let listY = [0, 3, -3];
 let gamemode = 0;
 let playerOne = 0;
-let playerTwo = 9;
+let playerTwo = 0;
 let yValue;
 let compY;
 let ballX;
@@ -53,11 +53,12 @@ function setup() {
   boxx = width / 2 - box.w / 2;
 }
 
+
 function draw() {
 
   // The start screen
   if (gamemode === 0) {
-    let buff = (boundsTwo.w - bounds.w) / 2
+    let buff = (boundsTwo.w - bounds.w) / 2;
     background(0);
 
     // Explaining How to Play the Game
@@ -113,10 +114,12 @@ function draw() {
     reset();
   }
 
-  // Displays the Winner
+  // Checks for a Winner
   if (gamemode < 3) {
     winner();
   }
+  
+  // The End Screen
   if (gamemode === 2){
     bMusic.stop();
     applause.play();
@@ -131,17 +134,23 @@ function windowResized() {
   yb = height / 2 - bounds.h / 2;
   xbb = width / 2 - bounds.w / 2;
   boxx = width / 2 - box.w / 2;
+  winner();
+  gamemode = 3;
 }
 
 //  Function that checks if you clicked the box
 function clickTheBox() {
   if (mouseX <= boxx + box.w + 10 && mouseX >= boxx - 10) {
     if (mouseY <= yb + bounds.h + boundsTwo.h + box.h + 35 && mouseY >= yb + bounds.h + boundsTwo.h + 15 ){
+      
+      // changes box colour if hovering over it
       fill(40);
       stroke(255, 69, 0);
       rect(boxx - 10, yb + bounds.h + boundsTwo.h + 15 , box.w + 20, box.h + 20);
       fill(255, 69, 0);
       text("OKAY", boxx, yb + bounds.h + boundsTwo.h + 45);
+
+      // starts game if you click box
       if (mouseIsPressed) {
         gamemode = 1;
         ballX = width/2;
@@ -179,6 +188,7 @@ function movePlayerOne(){
 
 // Function making the Computer Paddle move
 function compPaddle(){
+  // Effects how much the computer's paddle moves by
   let brain = random(0, 100);
   if (brain < 65) {
     brainSpeed = 1;
@@ -186,12 +196,14 @@ function compPaddle(){
     brainSpeed = 2;
   }
 
+  // Moving the computer's paddle
   if (ballY < compY + 25 - compSpeed){
     compY = compY - (compSpeed/brainSpeed);
   } else if (ballY > compY + 25 + compSpeed) {
     compY = compY + (compSpeed/brainSpeed);
   }
   
+  // Setting boundaries for the computer paddle
   if (compY <= 50) {
     compY = 50;
   }
@@ -202,25 +214,34 @@ function compPaddle(){
 
 // The Function Responsible for Checking if a Paddle Connected
 function touch(player) {
-  let signn = 1
+
+  // Making a variable to keep the Y direction the ball is moving in the same
+  let signn = 1;
   if (directionY < 0){
     signn = -1;
   }
+  
+  // Checking if the player's paddle encountered the ball
   if (ballX <= 45 && player === yValue || ballX >= windowWidth - 45 && player === compY) {
     if (ballY >= player && ballY <= player + 50){
+
+      // Setting angle the ball bounces back on from where it it the paddle
       if (ballY <= player + 5 || ballY >= player + 35) {
         directionY = directionX * sqrt(3);
       } else if (ballY <= player + 15 || ballY >= player + 25) {
-        console.log(ballX, ballY, directionX, directionY);
         directionY = directionX;
       } else {
         directionY = 0;
       } 
+
+      // Sending the ball in the other direction
       directionX = directionX * -1;
-      speed = speed + 1
+      speed = speed + 1;
       if (directionY <= 0 && signn !== -1 || directionY > 0 && signn !== 1){
         directionY = directionY * -1;
       }
+
+      // Ball hit the paddle sound
       ballHit.play();
     }
   }
@@ -228,17 +249,23 @@ function touch(player) {
 
 // Function to Reset the Ball and Set the Score
 function reset(){
+
+  // Checking if the ball went out of bounds
   if (ballX < 35 || ballX > windowWidth - 35) {
     if (ballX <= 35){
       playerTwo = playerTwo + 1;
     } else {
-      playerOne = playerOne + 1
+      playerOne = playerOne + 1;
     }
+
+    // Resetting the ball for the next round
     speed = 1;
     directionX = 3;
     directionY = random(listY);
     ballX = width/2;
     ballY = height/2;
+
+    // Sending the ball in a random direction
     let varR = random(0, 100);
     if (varR < 50) {
       directionX = directionX * -1;
@@ -248,6 +275,8 @@ function reset(){
 
 // Creating Increasing Speed
 function speedMachine(){
+
+  // Increasing the ball's speed every second hit
   if (speed % 3 === 0){
     if (directionX < 0){
       directionX = directionX - 1;
@@ -259,19 +288,24 @@ function speedMachine(){
     }
     speed = 1;
   }
+
+  // Making the computer's speed proportional to the ball speed
   compSpeed = abs(directionX) * 2;
 }
 
 // Displaying the Winner
 function winner(){
-  if (playerOne >= 10){
+  // If a player's reached 10 points, display their win screen
+  if (playerOne === 10){
     textFont(font);
     background(0);
+    textAlign(CENTER);
     text('Player One Wins!', width/2, height/2);
     gamemode = 2;
-  } else if (playerTwo >= 10){
+  } else if (playerTwo === 10){
     textFont(font);
     background(0);
+    textAlign(CENTER);
     text('Player Two Wins!', width/2, height/2);
     gamemode = 2;
   }

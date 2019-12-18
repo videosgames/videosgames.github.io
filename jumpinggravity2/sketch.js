@@ -15,6 +15,10 @@ let sonicSprint1;
 let sonicSprint2;
 let sonicSprint3;
 let sonicSprint4;
+let sonicJump1;
+let sonicJump2;
+let sonicJump3;
+let sonicJump4;
 let recty = 342;
 let rectx = 100;
 let recty2 = 343;
@@ -27,6 +31,7 @@ let ysp = 0;
 let xsp = 0;
 let acc = 0.046875*2;
 let part = 0;
+let rolls = 0;
 //let write;
 
 function preload(){
@@ -41,6 +46,10 @@ function preload(){
   sonicSprint2 = loadImage('assets/sonic_sprint2.png');
   sonicSprint3 = loadImage('assets/sonic_sprint3.png');
   sonicSprint4 = loadImage('assets/sonic_sprint4.png');
+  sonicJump1 = loadImage('assets/sonic_roll1.png');
+  sonicJump2 = loadImage('assets/sonic_roll2.png');
+  sonicJump3 = loadImage('assets/sonic_roll3.png');
+  sonicJump4 = loadImage('assets/sonic_roll4.png');
   //write = loadFont('assets/OpenDyslexicMono-Regular.otf');
 }
 
@@ -106,7 +115,11 @@ function moving(){
     rectx = rectx - gsp;
     rectx2 = rectx2 - gsp;
     way = 0;
-    runImage();
+    if (recty === 342 || recty2 === 342) {
+      runImage();
+    } else {
+      jumpy();
+    }
     steps = steps + 1;
     if (steps > 12){
       steps = 0;
@@ -124,7 +137,11 @@ function moving(){
     rectx = rectx - gsp;
     rectx2 = rectx2 - gsp;
     way = 1;
-    runImage();
+    if (recty === 342 || recty2 === 342) {
+      runImage();
+    } else {
+      jumpy();
+    }
     steps = steps + 1;
     if (steps > 12){
       steps = 0;
@@ -140,7 +157,11 @@ function moving(){
       rectx2 = rectx2 - gsp;
       scale(-1, 1);
       x = -x
-      image(sonic, x, y, sonic.width*2, sonic.height*2);
+      if (recty === 342 || recty2 === 342) {
+        image(sonic, x, y, sonic.width*2, sonic.height*2);
+      } else{
+        jumpy();
+      }
       x = -x
     } else {
       gsp = gsp - acc;
@@ -149,7 +170,11 @@ function moving(){
       }
     rectx = rectx - gsp;
     rectx2 = rectx2 - gsp;
-    image(sonic, x, y, sonic.width*2, sonic.height*2);
+    if (recty === 342 || recty2 === 342) {
+      image(sonic, x, y, sonic.width*2, sonic.height*2);
+    } else {
+      jumpy();
+    }
     steps = 0;
     }
   }
@@ -196,6 +221,24 @@ function runImage() {
     }
     if (way === 0){
       x = -x;
+    }
+  }
+}
+
+function jumpy() {
+  if (recty !== 342 && recty2 !== 342) {
+    if (rolls === 0){
+      image(sonicJump1, x, y, sonicJump1.width*2, sonicJump2.height*2);
+      rolls = rolls + 1;
+    } else if (rolls === 1){
+      image(sonicJump2, x, y, sonicJump2.width*2, sonicJump2.height*2);
+      rolls = rolls + 1;
+    } else if (rolls === 2){
+      image(sonicJump3, x, y, sonicJump3.width*2, sonicJump3.height*2);
+      rolls = rolls + 1;
+    } else {
+      image(sonicJump4, x, y, sonicJump4.width*2, sonicJump4.height*2)
+      rolls = 0;
     }
   }
 }

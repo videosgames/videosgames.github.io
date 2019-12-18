@@ -65,7 +65,7 @@ function draw() {
   rect(rectx, recty, 583, 50);
   fill(0, 0, 255);
   rect(rectx2, recty2, 483, 50);
-
+  
   text(window.width, 110, 110);
 
   moving();
@@ -102,7 +102,6 @@ function draw() {
 }
 
 function moving(){
-
   if (keyIsDown(LEFT_ARROW)) {
     if (gsp >= 0) {
       gsp = gsp - 1;
@@ -119,6 +118,7 @@ function moving(){
       runImage();
     } else {
       jumpy();
+      rolls = rolls + 1;
     }
     steps = steps + 1;
     if (steps > 12){
@@ -141,6 +141,7 @@ function moving(){
       runImage();
     } else {
       jumpy();
+      rolls = rolls + 1;
     }
     steps = steps + 1;
     if (steps > 12){
@@ -161,6 +162,7 @@ function moving(){
         image(sonic, x, y, sonic.width*2, sonic.height*2);
       } else{
         jumpy();
+        rolls = rolls + 1;
       }
       x = -x
     } else {
@@ -174,6 +176,7 @@ function moving(){
       image(sonic, x, y, sonic.width*2, sonic.height*2);
     } else {
       jumpy();
+      rolls = rolls + 1;
     }
     steps = 0;
     }
@@ -184,6 +187,9 @@ function moving(){
       recty = recty + ysp;
       recty2 = recty2 + ysp;
     }
+  }
+  if (rolls === 7){
+    rolls = 0;
   }
 }
 
@@ -227,18 +233,14 @@ function runImage() {
 
 function jumpy() {
   if (recty !== 342 && recty2 !== 342) {
-    if (rolls === 0){
+    if (rolls <= 1){
       image(sonicJump1, x, y, sonicJump1.width*2, sonicJump2.height*2);
-      rolls = rolls + 1;
-    } else if (rolls === 1){
+    } else if (rolls <= 3){
       image(sonicJump2, x, y, sonicJump2.width*2, sonicJump2.height*2);
-      rolls = rolls + 1;
-    } else if (rolls === 2){
+    } else if (rolls <= 5){
       image(sonicJump3, x, y, sonicJump3.width*2, sonicJump3.height*2);
-      rolls = rolls + 1;
-    } else {
-      image(sonicJump4, x, y, sonicJump4.width*2, sonicJump4.height*2)
-      rolls = 0;
+    } else if (rolls <= 7){
+      image(sonicJump4, x, y, sonicJump4.width*2, sonicJump4.height*2);
     }
   }
 }

@@ -15,6 +15,10 @@ let sonicSprint1;
 let sonicSprint2;
 let sonicSprint3;
 let sonicSprint4;
+let recty = 342;
+let rectx = 100;
+let recty2 = 343;
+let rectx2 = 783;
 let y = 300;
 let x = 600;
 let way = 1;
@@ -22,6 +26,7 @@ let gsp = 0;
 let ysp = 0;
 let xsp = 0;
 let acc = 0.046875*2;
+let part = 0;
 //let write;
 
 function preload(){
@@ -48,33 +53,42 @@ function draw() {
   imageMode(CENTER);
   background(255);
   fill(255, 0, 0);
-  rect(100, 342, 583, 50);
+  rect(rectx, recty, 583, 50);
   fill(0, 0, 255);
-  rect(683, 342, 583, 50);
+  rect(rectx2, recty2, 483, 50);
 
   text(window.width, 110, 110);
 
   moving();
-  if (y === 300) {
-    if (x >= 86 && x <= 1280){
+  if (recty === 342) {
+    if (rectx >= 17 && rectx <= 600 || rectx2 >= 117 && rectx2 <= 600){
       ysp = 0;
     }
-  } else if (y >= height - 42){
-    y = height - 42;
-    ysp = 0;
-  } else if (y > 300){
-    ysp = ysp + (0.21875*2);
-    y = y + ysp;
+  } else if (recty < 342 || recty2 < 342){
+    ysp = ysp - (0.21875*2);
+    recty = recty + ysp;
+    recty2 = recty2 + ysp;
   } 
-  if (x < 86 && y === 300 || x > 1280 && y === 300) {
-    y = y + 5;
+  if (rectx2 < 117 && recty === 342 && recty2 === 342 || rectx < 17 && rectx2 > 600 && recty2 === 342 || rectx > 600 && recty === 342) {
+    recty = recty - 5;
+    recty2 = recty2 - 5;
   }
-  if (y < 300){
-    ysp = ysp + (0.21875*2);
-    y = y + ysp;
-    if (x >= 86 && y >= 300 || x <= 1280 && y >= 300){
-      y = 300;
+
+  if (recty > 342 || recty2 > 342){
+    ysp = ysp - (0.21875*2);
+    recty = recty + ysp;
+    recty2 = recty2 + ysp;
+    if (rectx >= 17 && rectx <= 600 && recty <= 342 || rectx2 >= 117 && rectx2 <= 600 && recty <= 342){
+      recty = 342;
+      recty2 = 342;
     }
+  }
+
+  if (recty < -50){
+    recty = height;
+    recty2 = height;
+    rectx = 100;
+    rectx2 = 783;
   }
 }
 
@@ -89,13 +103,8 @@ function moving(){
     if (gsp <= -12){
       gsp = -12;
     }
-    x = x + gsp;
-    if (x - 30 <= 0) {
-      x = 30;
-    }
-    if (x + 25 >= width) {
-      x = width - 25;
-    }
+    rectx = rectx - gsp;
+    rectx2 = rectx2 - gsp;
     way = 0;
     runImage();
     steps = steps + 1;
@@ -112,13 +121,8 @@ function moving(){
     if (gsp >= 12){
       gsp = 12;
     }
-    x = x + gsp;
-    if (x - 30 <= 0) {
-      x = 30;
-    }
-    if (x + 25 >= width) {
-      x = width - 25;
-    }
+    rectx = rectx - gsp;
+    rectx2 = rectx2 - gsp;
     way = 1;
     runImage();
     steps = steps + 1;
@@ -132,13 +136,8 @@ function moving(){
       if (gsp >= 0){
         gsp = 0;
       }
-      x = x + gsp;
-      if (x - 30 <= 0) {
-        x = 30;
-      }
-      if (x + 25 >= width) {
-        x = width - 25;
-      }
+      rectx = rectx - gsp;
+      rectx2 = rectx2 - gsp;
       scale(-1, 1);
       x = -x
       image(sonic, x, y, sonic.width*2, sonic.height*2);
@@ -148,21 +147,17 @@ function moving(){
       if (gsp <= 0){
         gsp = 0;
       }
-    x = x + gsp;
-    if (x - 30 <= 0) {
-      x = 30;
-    }
-    if (x + 25 >= width) {
-      x = width - 25;
-    }
+    rectx = rectx - gsp;
+    rectx2 = rectx2 - gsp;
     image(sonic, x, y, sonic.width*2, sonic.height*2);
     steps = 0;
     }
   }
   if (keyIsDown(UP_ARROW)){
-    if (y === 300 && ysp === 0 || y === height - 42 && ysp === 0){
-      ysp = -13;
-      y = y + ysp;
+    if (recty === 342 && ysp === 0 || recty2 === 342 && ysp === 0){
+      ysp = 13;
+      recty = recty + ysp;
+      recty2 = recty2 + ysp;
     }
   }
 }
